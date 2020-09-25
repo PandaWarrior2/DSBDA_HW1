@@ -9,7 +9,8 @@ import org.apache.hadoop.mapreduce.Mapper;
 import java.io.*;
 
 /**
- * Маппер: парсит UserAgent из логов, к каждому браузеру присваиваем в соответствие единицу
+ * Маппер: Парсит строку лога, вытаскивает IP-адрес и количество байт.
+ * Присваивает bytes это количество байт, остальным значениям по 1 (requests, ибо в рамках одного запроса, FloatWriteable будет рассчитано в редьюсере)
  */
 public class HW1Mapper extends Mapper<Object, Text, Text, LogWritable> {
 

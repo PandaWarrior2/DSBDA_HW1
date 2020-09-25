@@ -30,15 +30,15 @@ public class MapReduceApplication {
         conf.set("mapreduce.output.textoutputformat.separator", ",");
         int reducers_count = 1;
         Job job = Job.getInstance(conf, "Bytes stats");
-        job.setJarByClass(LogWritable.class);
-        job.setMapperClass(HW1Mapper.class);
-        job.setCombinerClass(HW1Reducer.class);
-        job.setReducerClass(HW1Reducer.class);
+        job.setJarByClass(LogWritable.class); // Основной класс-контейнер для данных
+        job.setMapperClass(HW1Mapper.class); // Маппер
+        job.setCombinerClass(HW1Reducer.class); // Комбайнер
+        job.setReducerClass(HW1Reducer.class); // Редуктор
         job.setNumReduceTasks(reducers_count);
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(LogWritable.class);
         job.setOutputFormatClass(TextOutputFormat.class);
-
+        // Задаем входную и выходную директории
         Path outputDirectory = new Path(args[1]);
         FileInputFormat.addInputPath(job, new Path(args[0]));
         FileOutputFormat.setOutputPath(job, outputDirectory);
@@ -47,7 +47,7 @@ public class MapReduceApplication {
         job.waitForCompletion(true);
         long time = System.currentTimeMillis() - start;
         log.info("=====================JOB ENDED=====================");
-        log.info("Time: " +String.valueOf(time));
+        log.info("Time: " +String.valueOf(time)); // Считаем время выполнения
         // проверяем статистику по счётчикам
         Counter counter = job.getCounters().findCounter(CounterType.MALFORMED);
         log.info("=====================COUNTERS " + counter.getName() + ": " + counter.getValue() + "=====================");

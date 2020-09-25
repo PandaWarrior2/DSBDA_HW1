@@ -1,7 +1,13 @@
 package bd.homework1;
 import java.io.*;
 import org.apache.hadoop.io.*;
-
+/*
+    Основной класс-контейнер для данных
+    Объединяет в себе 3 показателя:
+    - Количество байт, присланных с IP адреса
+    - Количество запросов
+    - Ср.количество байт с IP адреса
+*/
 public class LogWritable implements Writable {
     private IntWritable bytes;
     private IntWritable requests;
@@ -25,6 +31,7 @@ public class LogWritable implements Writable {
     public IntWritable getRequestsCount(){
         return this.requests;
     }
+    // Запись и чтение полей, соответственно.
     @Override
     public void write(DataOutput dataOut) throws IOException {
         bytes.write(dataOut);
@@ -53,11 +60,12 @@ public class LogWritable implements Writable {
         }
         return false;
     }
+    // Метод для записи в файл (формат)
     @Override
     public String toString(){
         return bytes.toString() + ", " + requests.toString() + ", " + average_bytes.toString();
     }
-
+    // Метод для подгрузки готовых значений в редьюсере
     public void set(IntWritable bytes, IntWritable requests, FloatWritable avg) {
         this.average_bytes = avg;
         this.bytes = bytes;

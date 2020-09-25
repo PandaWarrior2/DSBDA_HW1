@@ -10,19 +10,12 @@ import sun.rmi.runtime.Log;
 import java.io.IOException;
 
 /**
- * Редьюсер: суммирует все единицы полученные от {@link HW1Mapper}, выдаёт суммарное количество пользователей по браузерам
+ * Редьюсер:
+ * а) суммирует все байты полученные от HW1Mapper, выдаёт суммарное количество байт
+ * б) суммирует все количества запросов, полученные от HW1Mapper, выдает суммарное кол-во запросов, полученное с определенного IP
+ * в) считает среднее число байт, пришедшее от определенного IP
  */
-/*public class HW1Reducer extends Reducer<Text, IntWritable, Text, IntWritable> {
 
-    @Override
-    protected void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
-        int sum = 0;
-        while (values.iterator().hasNext()) {
-            sum += values.iterator().next().get();
-        }
-        context.write(key, new IntWritable(sum));
-    }
-}*/
 public class HW1Reducer extends Reducer<Text, LogWritable, Text, LogWritable> {
     private IntWritable rBytes = new IntWritable();
     private IntWritable rRequests = new IntWritable();
