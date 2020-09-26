@@ -57,9 +57,13 @@ def gen_error(line):
                     result += " "
 
             first = False
-            err = random.choices([0,1], weights=[70,30], k=1)
+            err = random.choices([0,1], weights=[30,70], k=1)
             if err[0]:
-                i = "*" * int(len(i)-random.randint(0, int(len(i)/2)))
+                lst = list(i)
+                random.shuffle(lst)
+                i = ''.join(lst)
+                i = i[0:random.randint(0, int(len(i)/2))]
+                #i = "*" * int(len(i)-random.randint(0, int(len(i)/2)))
             result += i;
         return result
 
