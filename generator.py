@@ -52,7 +52,9 @@ def gen_error(line):
         first = True
         for i in arr:
             if not first:
-                result += " "
+                is_space = random.choices([0,1], weights=[50,50], k=1)
+                if is_space[0]:
+                    result += " "
 
             first = False
             err = random.choices([0,1], weights=[70,30], k=1)
