@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3.6
 #67.195.114.50 - - [20/May/2010:07:35:27 +0100] "GET /post/261556/ HTTP/1.0" 404 15 "-" "Mozilla/5.0 (compatible; Yahoo! Slurp/3.0; http://help.yahoo.com/help/us/ysearch/slurp)"
 import random
 import datetime
@@ -41,6 +41,26 @@ def gen_line(agents):
         gen_bytes_count(),
         gen_user_agent(agents)
     )
+
+def gen_error(line):
+    isErr = random.choices([0,1], weights=[90,10], k=1)
+    if not isErr[0]:
+        return line
+    else:
+        result = ""
+        arr = line.split(" ")
+        first = True
+        for i in arr:
+            if not first:
+                result += " "
+
+            first = False
+            err = random.choices([0,1], weights=[70,30], k=1)
+            if err[0]:
+                i = "*" * int(len(i)-random.randint(0, int(len(i)/2)))
+            result += i;
+        return result
+
 def main():
     try:
         opts, args = getopt.getopt(sys.argv[1:], "ho:s:c:", ["help", "output=", "size=", "count="])
@@ -75,10 +95,11 @@ def main():
         f = open(output+"_"+str(i)+".log", "w")
         while sum_size < limit_size:
             line = gen_line(agents)
+            line = gen_error(line)
             sum_size += len(line)+1
             f.write(line+'\n')
         f.close()
-	print("Generated %s/%s" % (i+1, splits_count))
+        print("Generated %s/%s" % (i+1, splits_count))
 
 if __name__ == "__main__":
     print("Started!")

@@ -32,12 +32,14 @@ public class HW1Reducer extends Reducer<Text, LogWritable, Text, LogWritable> {
             requests_cnt += i.getRequestsCount().get();
         }
         float avg_bytes = 0;
+
         if(requests_cnt != 0) {
             avg_bytes = (float) sum_bytes / requests_cnt;
         }
         else{
             avg_bytes = 0.0f;
         }
+
         rBytes.set(sum_bytes);
         rRequests.set(requests_cnt);
         avgBytes.set(avg_bytes);

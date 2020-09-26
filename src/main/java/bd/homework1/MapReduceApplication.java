@@ -32,7 +32,7 @@ public class MapReduceApplication {
         Job job = Job.getInstance(conf, "Bytes stats");
         job.setJarByClass(LogWritable.class); // Основной класс-контейнер для данных
         job.setMapperClass(HW1Mapper.class); // Маппер
-        job.setCombinerClass(HW1Reducer.class); // Комбайнер
+        job.setCombinerClass(HW1Combiner.class); // Комбайнер
         job.setReducerClass(HW1Reducer.class); // Редуктор
         job.setNumReduceTasks(reducers_count);
         job.setOutputKeyClass(Text.class);
@@ -48,8 +48,5 @@ public class MapReduceApplication {
         long time = System.currentTimeMillis() - start;
         log.info("=====================JOB ENDED=====================");
         log.info("Time: " +String.valueOf(time)); // Считаем время выполнения
-        // проверяем статистику по счётчикам
-        Counter counter = job.getCounters().findCounter(CounterType.MALFORMED);
-        log.info("=====================COUNTERS " + counter.getName() + ": " + counter.getValue() + "=====================");
     }
 }
